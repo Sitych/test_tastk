@@ -7,7 +7,6 @@
 # include <sys/uio.h>
 
 # define BUF_READ 64
-
 typedef struct wifi_t {
 	char* ssid;
 	char* pass;
@@ -32,15 +31,28 @@ typedef struct config_t {
 	wifi_t wifi;
 } config_t;
 
-// typedef struct	sections_s
-// {
-// 	char		*name;
-// 	char		**data;
-// }				section_t;
+typedef struct	section_s
+{
+	char				*name;
+	char				**data;
+	struct section_s	*next;
+}				section_t;
+
+typedef struct	funforparse_s
+{
+	char				*str;
+	config_t			*(*fun)(section_t *section, config_t *);
+}				funforparse_t;
 
 int		config_read(const char* __ini_data, config_t* __out_config);
 char*	config_write(const config_t* __config);
 
 config_t	*config_create(void);
 char		*read_file(int fd);
+section_t	*section_create(char ***lines);
+char		**section_data(char **lines, section_t **ptr);
+section_t	*sections_parse(char **lines);
+config_t	*wifi_parser(section_t *ptr, config_t *);
+config_t	*one_day_parser(section_t *ptr, config_t *);
+config_t	*pwm_parser(section_t *ptr, config_t *);
 #endif

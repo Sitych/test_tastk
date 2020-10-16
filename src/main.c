@@ -28,40 +28,6 @@ char	*read_file(const int fd)
 	return (result);
 }
 
-int	parse_section(const char **str, char **name_section)
-{
-
-}
-
-int	config_read(const char* __ini_data, config_t* __out_config)
-{
-	int 	fd;
-	char	*str;
-	char	**lines;
-
-	__out_config = config_create();
-	fd = open(__ini_data, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open failed on input file");
-		return (0);
-	}
-	str = read_file(fd);
-	lines = ft_strsplit(str, '\n');
-	if (lines == NULL)
-	{
-		ft_putstr("Error: malloc error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	for (size_t i = 0; lines[i] ; i++)
-	{
-		ft_printf("%s\n", lines[i]);
-	}
-	close(fd);
-	return (1);
-}
-
 int main(int argc, char **argv)
 {
 	config_t	*config = NULL;

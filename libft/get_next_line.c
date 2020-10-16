@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qjosmyn <qjosmyn@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dima <dima@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:23:54 by qjosmyn           #+#    #+#             */
-/*   Updated: 2020/02/18 20:29:56 by qjosmyn          ###   ########.fr       */
+/*   Updated: 2020/10/15 19:40:27 by dima             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ int			ft_intchr(char *str, char c, size_t len)
 	result = 0;
 	while (str[result] != c && str[result])
 		result++;
-	return (result == len ? -1 : result);
+	return (result == len ? (size_t)(-1) : result);
 }

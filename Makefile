@@ -1,5 +1,5 @@
 NAME = parser
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g
 
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
@@ -12,7 +12,7 @@ HEADER := $(addprefix $(HEADER_DIR), $(HEADER_LIST))
 
 INCLUDES := -I $(HEADER_DIR) -I $(LIBFT_HEADERS_DIR)
 
-SRC_LIST = parser.c config.c
+SRC_LIST = funforparse.c config.c main.c section.c
 SRC_DIR = src/
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 

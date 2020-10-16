@@ -1,4 +1,12 @@
 #include "parser.h"
+#include "funforparse.h"
+
+void	print_config(config_t *config)
+{
+	ft_printf("Wifi:\n%s\n%s\n",config->wifi.ssid, config->wifi.pass);
+	ft_printf("One_day:\n%d\n%d\n",config->day.sunrise, config->day.sunset);
+	ft_printf("PWM:\n%d\n%d\n%d\n%d\n%d\n",config->pwm.ch1, config->pwm.ch2, config->pwm.ch3, config->pwm.ch4, config->pwm.ch5);
+}
 
 config_t	*config_create(void)
 {
@@ -17,17 +25,55 @@ config_t	*config_create(void)
 	return (tmp);
 }
 
-section_t	*section_create(char *name)
+int	config_read(const char* __ini_data, config_t* __out_config)
 {
-	section_t	*tmp;
+	int 	fd;
+	char	*str;
+	char	**lines;
+	section_t *ptr;
 
-	tmp = (section_t*)ft_malloc(sizeof(section_t));
-	tmp->name = ft_strdup(name);
-	if (tmp->name == NULL)
+	__out_config = config_create();
+	fd = open(__ini_data, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open failed on input file");
+		return (0);
+	}
+	str = read_file(fd);
+	lines = ft_strsplit(str, '\n');
+	if (lines == NULL)
 	{
 		ft_putstr("Error: malloc error\n");
 		exit(EXIT_FAILURE);
 	}
-	tmp->data = NULL;
-	return (tmp);
+	ptr = sections_parse(lines);
+	section_t *tmp;
+	tmp = ptr;
+	funforparse_t	*ptr1;
+	while (tmp)
+	{
+		ptr1 = parse_g;
+		while (ptr1->str)
+		{
+			if (!ft_strcmp(tmp->name, ptr1->str))
+				break ;
+			ptr1++;
+		}
+		if (!ptr1->str)
+		{
+			ft_printf("Unknown name section %s\n", ptr->name);
+			return (0);
+		}
+		__out_config = ptr1->fun(tmp, __out_config);
+		tmp = tmp->next;
+	}
+	int i = 0;
+	while (lines[i])
+		i++;
+	ft_free((void**)lines, i);
+	lines = NULL;
+	print_config(__out_config);
+	// ft_printf("%s %s", __out_config->wifi.pass, ptr->name);
+	close(fd);
+	return (1);
 }
