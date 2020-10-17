@@ -5,8 +5,9 @@
 # include "get_next_line.h"
 # include "libftprintf.h"
 # include <sys/uio.h>
+# include "time.h"
 
-# define BUF_READ 64
+# define BUF_READ	64
 typedef struct wifi_t {
 	char* ssid;
 	char* pass;
@@ -55,4 +56,6 @@ section_t	*sections_parse(char **lines);
 config_t	*wifi_parser(section_t *ptr, config_t *);
 config_t	*one_day_parser(section_t *ptr, config_t *);
 config_t	*pwm_parser(section_t *ptr, config_t *);
+void		ft_section_del(section_t **ptr);
+
 #endif

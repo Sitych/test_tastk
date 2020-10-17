@@ -2,9 +2,10 @@
 
 char	*read_file(const int fd)
 {
-	char *result;
-	char read_str[BUF_READ + 1];
-	int len;
+	char	*result;
+	char	*buf;
+	char	read_str[BUF_READ + 1];
+	int		len;
 
 	len = read(fd, read_str, BUF_READ);
 	read_str[len] = 0;
@@ -18,7 +19,9 @@ char	*read_file(const int fd)
 	{
 		len = read(fd, read_str, BUF_READ);
 		read_str[len] = 0;
-		result = ft_strjoin(result, read_str);
+		buf = ft_strjoin(result, read_str);
+		ft_strdel(&result);
+		result = buf;
 		if (result == NULL)
 		{
 			ft_putstr("Error: malloc error\n");

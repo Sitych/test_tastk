@@ -47,7 +47,7 @@ static long int	one_day_field(char *name, char **data)
 	pos = ft_strchr(data[i], '=');
 	if (pos + 1)
 	{
-		time = ft_atoi(pos + 1);
+		time = ft_atoi(pos + 1) * 60;
 		pos = ft_strchr(data[i], ':');
 		if (pos)
 			time += ft_atoi(pos + 1);

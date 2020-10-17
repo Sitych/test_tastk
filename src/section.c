@@ -81,10 +81,32 @@ section_t	*sections_parse(char **lines)
 		lines++;
 	ptr = section_create(&lines);
 	head = ptr;
+	int i = 0;
 	while (*lines)
 	{
 		ptr->next = section_create(&lines);
 		ptr = ptr->next;
+		i++;
 	}
 	return (head);
+}
+
+void		ft_section_del(section_t **ptr)
+{
+	int	len;
+	section_t *tmp;
+
+	while (*ptr)
+	{
+		tmp = (*ptr)->next;
+		ft_strdel(&((*ptr)->name));
+		len = 0;
+		while ((*ptr)->data[len])
+			len++;
+		(*ptr)->data = (char**)ft_free((void**)(*ptr)->data, len);
+		free(*ptr);
+		*ptr = NULL;
+		*ptr = tmp;
+	}
+	*ptr = NULL;
 }
