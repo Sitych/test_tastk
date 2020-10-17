@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		ft_printf("Usage: %s <sourcefile.ini>\n", argv[0]);
+		ft_printf("Usage: %s (sourcefile.ini|config.ini)\n", argv[0]);
 		return (0);
 	}
 	if (config_read(argv[1], config) == -1)
